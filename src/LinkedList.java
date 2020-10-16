@@ -26,7 +26,7 @@ public class LinkedList<T> {
      * @return True if the list is empty, false otherwise.
      */
     public boolean isEmpty() {
-        return head == null;
+        return this.head == null && this.tail == null;
     }
 
     /**
@@ -126,16 +126,10 @@ public class LinkedList<T> {
             throw new IndexOutOfBoundsException("Index is either out of bounds or the list is empty");
         }
 
-        if (i == 0) {
-            if (this.listLength > 1) {
-                Link<T> old = this.head;
-                this.head = old.getNext();
-                old.setNext(null);
-            } else {
-                this.head.setNext(null);
-                this.head = null;
-                this.tail = null;
-            }
+        if(i == 0) {
+            this.removeHead();
+        } else if (i == this.listLength - 1) {
+            this.removeTail();
         } else {
             Link<T> previous = this.previousLink(i);
             Link<T> current = linkAt(i);
@@ -160,6 +154,47 @@ public class LinkedList<T> {
             link.setNext(null);
         }
         this.listLength ++;
+    }
+
+    /**
+     * Removes tail of the linked list.
+     * @throws NoSuchElementException if the list is empty
+     */
+    public void removeTail() throws NoSuchElementException {
+        if (isEmpty()) {
+            throw new NoSuchElementException("The list is empty");
+        }
+
+        if (this.listLength > 1) {
+            Link<T> old = this.tail;
+            this.tail = previousLink(listLength - 1);
+            old.setNext(null);
+            this.tail.setNext(null);
+        } else {
+            this.head.setNext(null);
+            this.head = null;
+            this.tail = null;
+        }
+    }
+
+    /**
+     * Removes head of the linked list
+     * @throws NoSuchElementException if the list is empty.
+     */
+    public void removeHead() throws NoSuchElementException {
+        if (isEmpty()) {
+            throw new NoSuchElementException();
+        }
+
+        if (this.listLength > 1) {
+            Link<T> old = this.head;
+            this.head = old.getNext();
+            old.setNext(null);
+        } else {
+            this.head.setNext(null);
+            this.head = null;
+            this.tail = null;
+        }
     }
 
     /**
