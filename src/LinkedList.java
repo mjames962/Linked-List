@@ -85,7 +85,7 @@ public class LinkedList<T> {
     }
 
     /**
-     * @param i idex of Link
+     * @param i index of Link
      * @return the value stored in Link at index i
      */
     public T itemAt(int i) {
